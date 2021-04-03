@@ -1,5 +1,5 @@
 # MovieBrowser
-A movie browser using the tmdb api (https://www.themoviedb.org/) and React
+A movie browser using the tmdb api (https://www.themoviedb.org/) and React.
 The project currently uses base Bootstrap for styles.
 
 ## Warning
