@@ -23,7 +23,6 @@ const MovieView = () => {
     fetch (`https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${config.apiKey}&language=en-US&page=1`)
     .then(response => response.json())
     .then(data => {
-      console.log("reviews", data);
       setMovieReviews(data);
     });
 	}, [id]);
