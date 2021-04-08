@@ -1,6 +1,7 @@
 import Hero from './Hero.js';
 import ProductionView from './ProductionView.js';
 import SimilarView from './SimilarView.js';
+import ReviewView from './ReviewView.js';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import config from "../config.json";
@@ -8,6 +9,7 @@ import config from "../config.json";
 const MovieView = () => {
 	const { id } = useParams();
 	const [movieDetails, setMovieDetails] = useState({});
+  const [movieReviews, setMovieReviews] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -18,6 +20,12 @@ const MovieView = () => {
         setMovieDetails(data);
         setIsLoading(false);
       });
+    fetch (`https://api.themoviedb.org/3/movie/${id}/reviews?api_key=${config.apiKey}&language=en-US&page=1`)
+    .then(response => response.json())
+    .then(data => {
+      console.log("reviews", data);
+      setMovieReviews(data);
+    });
 	}, [id]);
 
   function renderMovieDetails() {
@@ -91,6 +99,9 @@ const MovieView = () => {
                 }
               </div>
             </div>
+            { movieReviews && movieReviews.results?.length > 0 &&
+              <ReviewView reviews={movieReviews.results}/>
+            }
             { id &&
               <SimilarView id="id"/>
             }
