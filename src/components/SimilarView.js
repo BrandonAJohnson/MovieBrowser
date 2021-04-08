@@ -13,7 +13,6 @@ const SimilarView = () => {
 		fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${config.apiKey}&language=en-US&page=1`)
 			.then(response => response.json())
 			.then(data => {
-				console.log('similar films', data);
 				setSimilarFilms(data.results);
 				setCurrentPage(data.page);
 				setTotalPages(data.total_pages);
@@ -26,7 +25,6 @@ const SimilarView = () => {
 			fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${config.apiKey}&language=en-US&page=${nextPage}`)
 			.then(response => response.json())
 			.then(data => {
-				console.log('more similar films', data);
 				setSimilarFilms(similarFilms.concat(data.results).filter((item, index, self) =>
 					index === self.findIndex((t) => (
 						t.id === item.id

@@ -20,4 +20,9 @@
 	background-position: center;
 	opacity: 0.4;
 }
-
+.nav-link {
+	margin-bottom: 0;
+}
+.nav-link.active {
+	border-bottom: 2px solid white;
+}

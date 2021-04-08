@@ -16,8 +16,15 @@ const Navbar = ({ searchText, setSearchText, setClickedSearch }) => {
     history.push('/search');
     setClickedSearch(true);
   }
+  const clickedNavLink = (e) => {
+    let elems = document.getElementsByClassName('nav-link');
+    Array.from(elems).forEach((elem) => {
+      elem.classList.remove('active');
+    });
+    e.target.classList.add('active');
+  }
 	return (
-	  <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow">
+	  <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
       <div className="container-fluid">
           <Link className="navbar-brand" to="/">Movie Browser</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,13 +33,13 @@ const Navbar = ({ searchText, setSearchText, setClickedSearch }) => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-           <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+           <Link className="nav-link active" aria-current="page" to="/" onClick={clickedNavLink}>Home</Link>
           </li>
           <li className="nav-item">
-           <Link className="nav-link" to="/about">About Us</Link>
+           <Link className="nav-link" to="/about" onClick={clickedNavLink}>About Us</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link disabled" to="/" tabIndex="-1" aria-disabled="true">Coming Soon</Link>
+            <Link className="nav-link" to="/comingsoon" onClick={clickedNavLink}>Coming Soon</Link>
           </li>
         </ul>
         <form className="d-flex">
@@ -45,7 +52,7 @@ const Navbar = ({ searchText, setSearchText, setClickedSearch }) => {
             value={searchText}
             onChange={updateSearchText}
           />
-          <button className="btn btn-outline-success" type="button" onClick={clickedSearch}>Search</button>
+          <button className="btn btn-outline-primary" type="button" onClick={clickedSearch}>Search</button>
         </form>
         </div>
       </div>

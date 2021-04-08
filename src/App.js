@@ -2,6 +2,7 @@ import './App.css';
 import Navbar from './components/Navbar.js';
 import HomeView from './components/HomeView.js';
 import AboutView from './components/AboutView.js';
+import ComingSoonView from './components/ComingSoonView.js';
 import { Switch, Route } from 'react-router-dom';
 import SearchView from './components/SearchView.js';
 import MovieView from './components/MovieView.js';
@@ -40,6 +41,7 @@ function App() {
           <HomeView />
         </Route>
         <Route path="/about" component={AboutView}/>
+        <Route path="/comingsoon" component={ComingSoonView}/>
         <Route path="/search" exact>
           <SearchView keyword={searchText} searchResults={searchResults} />
         </Route>

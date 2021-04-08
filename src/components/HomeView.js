@@ -9,7 +9,6 @@ const HomeView = () => {
 		fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${config.apiKey}`)
       .then(response => response.json())
       .then(data => {
-				console.log(data);
         setTrending(data.results);
       });
 

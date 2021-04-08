@@ -15,7 +15,6 @@ const MovieView = () => {
     fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${config.apiKey}&language=en-US`)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         setMovieDetails(data);
         setIsLoading(false);
       });
