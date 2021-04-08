@@ -1,6 +1,28 @@
 import Hero from "./Hero.js";
+import TrendingView from "./TrendingView.js";
+import { useEffect, useState } from 'react';
+import config from "../config.json";
 
 const HomeView = () => {
+	const [trending, setTrending] = useState([]);
+	const getTrending = () => {
+		fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${config.apiKey}`)
+      .then(response => response.json())
+      .then(data => {
+				console.log(data);
+        setTrending(data.results);
+      });
+
+		setTrending([1]);
+	};
+
+	useEffect(() => {
+    if (!trending || trending.length === 0) {
+			getTrending();
+    }
+  },[trending]);
+
+
 	return (
 		<>
 			<Hero text="Welcome to my Movie Browser"/>
@@ -12,6 +34,9 @@ const HomeView = () => {
 						</p>
 					</div>
 				</div>
+				{trending && trending.length > 0 &&
+					<TrendingView trending={trending}/>
+				}
 			</div>
 		</>
 	)

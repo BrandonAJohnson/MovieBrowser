@@ -20,7 +20,6 @@ function App() {
   // takes a function that runs whenever the searchText is updated
   useEffect(() => {
     if (searchText) {
-      console.log(config);
       fetch(`https://api.themoviedb.org/3/search/movie?api_key=${config.apiKey}&language=en-US&query=${searchText}&page=1&include_adult=false`)
       .then(response => response.json())
       .then(data => {
