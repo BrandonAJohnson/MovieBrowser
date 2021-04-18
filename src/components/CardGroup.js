@@ -3,6 +3,7 @@ import MovieCard from "./MovieCard.js";
 
 const CardGroup = ({title, data}) => {
 	const resultsHTML = data && data.map((obj, i) => {
+    obj.media_type = obj.media_type ? obj.media_type : "movie";
 		return <MovieCard key={i} movie={obj}/>;
 	});
   return (

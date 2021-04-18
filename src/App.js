@@ -45,7 +45,8 @@ function App() {
         <Route path="/search" exact>
           <SearchView keyword={searchText} searchResults={searchResults} />
         </Route>
-        <Route path="/movies/:id" component={MovieView}/>
+        <Route path="/:media_type/:id" component={MovieView}/>
+        <Route path="/:media_type/:id" component={MovieView}/>
         <Route path="/missing-page" component={MissingPage}/>
       </Switch>
     </div>

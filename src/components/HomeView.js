@@ -5,22 +5,23 @@ import config from "../config.json";
 
 const HomeView = () => {
 	const [trending, setTrending] = useState([]);
+	const [hasFetched, setFetched] = useState(false);
 	const getTrending = () => {
 		fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${config.apiKey}`)
       .then(response => response.json())
       .then(data => {
         setTrending(data.results);
+				setFetched(true);
       });
 
-		setTrending([1]);
+		setTrending([]);
 	};
 
 	useEffect(() => {
-    if (!trending || trending.length === 0) {
+    if (!hasFetched && (!trending || trending.length === 0)) {
 			getTrending();
     }
-  },[trending]);
-
+  },[trending, hasFetched]);
 
 	return (
 		<>

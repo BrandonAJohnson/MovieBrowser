@@ -1,39 +1,39 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import MovieCard from "./MovieCard.js";
 import config from "../config.json";
 
 const SimilarView = () => {
-	const { id } = useParams();
+	const { id, media_type } = useParams();
 	const [similarFilms, setSimilarFilms] = useState({});
-	const [curPage, setCurrentPage] = useState(0);
+	const [curPage, setCurPage] = useState(1);
 	const [totPages, setTotalPages] = useState(0);
 
+	const showMore = () => {
+		let nextPage = curPage+1;
+		if (nextPage <= totPages) {
+			fetch(`https://api.themoviedb.org/3/${media_type}/${id}/similar?api_key=${config.apiKey}&language=en-US&page=${nextPage}`)
+				.then(response => response.json())
+				.then(data => {
+					if (data.results) {
+						setSimilarFilms(similarFilms.concat(data.results).filter((item, index, self) =>
+							index === self.findIndex((t) => (t.id === item.id))
+						));
+					}
+			});
+		}
+	}
+
 	useEffect(() => {
-		fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${config.apiKey}&language=en-US&page=1`)
+		fetch(`https://api.themoviedb.org/3/${media_type}/${id}/similar?api_key=${config.apiKey}&language=en-US&page=1`)
 			.then(response => response.json())
 			.then(data => {
 				setSimilarFilms(data.results);
-				setCurrentPage(data.page);
 				setTotalPages(data.total_pages);
+				setCurPage(1);
     });
-	}, [id]);
+	}, [id, media_type]);
 
-	const showMore = () => {
-		if (curPage < totPages) {
-			let nextPage = curPage+1;
-			fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${config.apiKey}&language=en-US&page=${nextPage}`)
-			.then(response => response.json())
-			.then(data => {
-				setSimilarFilms(similarFilms.concat(data.results).filter((item, index, self) =>
-					index === self.findIndex((t) => (
-						t.id === item.id
-					))
-				));
-				setCurrentPage(nextPage);
-    });
-		}
-	}
 
 	return (
 		<>
@@ -41,10 +41,11 @@ const SimilarView = () => {
 				<>
 					<div className="position-relative my-5">
 						<div className="mt-5">
-							<h2>Similar Films</h2>
+							<h2>Similar {media_type === "movie" ? "Films" : "Shows"}</h2>
 							<div className="row">
 								{
 									similarFilms.map((obj, i) => {
+										obj.media_type = media_type;
 										return <MovieCard key={i} movie={obj}/>;
 									})
 								}
@@ -53,7 +54,7 @@ const SimilarView = () => {
 						{curPage < totPages &&
 							<div className="position-relative my-3">``
 								<div className="position-absolute top-50 start-50 translate-middle">
-									<button onClick={showMore} id="showMoreButton" className="btn btn-success shadow">Show More</button>
+									<button onClick={() => {setCurPage(curPage+1);showMore();}} id="showMoreButton" className="btn btn-success shadow">Show More</button>
 								</div>
 							</div>
 						}

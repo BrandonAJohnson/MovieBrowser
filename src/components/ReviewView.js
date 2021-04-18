@@ -2,11 +2,11 @@
 const ReviewView = ({reviews}) => {
 
 	const getCardColor = (rating) => {
-		if (rating >= 8) return 'bg-success';
-		if (rating >= 7) return 'bg-primary';
-		if (rating >= 6) return 'bg-warning';
-		if (rating < 6) return 'bg-danger';
-		return 'bg-secondary';
+		if (rating >= 8) return 'text-success border-success';
+		if (rating >= 7) return 'text-primary border-primary';
+		if (rating >= 6) return 'text-warning border-warning';
+		if (rating < 6) return 'text-danger border-danger';
+		return 'border-secondary';
 	}
 
 	return (
@@ -20,8 +20,8 @@ const ReviewView = ({reviews}) => {
 								{
 									reviews.map((obj, i) => {
 										return (
-											<>
-												<div className={`card mb-3 text-white ${getCardColor(obj.author_details?.rating)}`}>
+											<div key={i}>
+												<div className={`card mb-3 rounded-3 border border-3 ${getCardColor(obj.author_details?.rating)} shadow`}>
 													<div className="card-body">
 														<h5 className="card-title">{obj.author}</h5>
 														<h6>{obj.author_details?.rating}</h6>
@@ -30,7 +30,7 @@ const ReviewView = ({reviews}) => {
 															<p className="card-text"><small>{obj.updated_at}</small></p> */}
 													</div>
 												</div>
-											</>
+											</div>
 										);
 									})
 								}
