@@ -17,7 +17,6 @@ const Navbar = ({ searchText, setSearchText, setClickedSearch }) => {
     setClickedSearch(true);
   }
   const clickedNavLink = (e) => {
-    console.log(e);
     let elems = document.getElementsByClassName('nav-link');
     Array.from(elems).forEach((elem) => {
       elem.classList.remove('active');
